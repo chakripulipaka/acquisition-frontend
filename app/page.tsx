@@ -117,7 +117,7 @@ export default function Page() {
                   Manage and track company risk assessments
                 </p>
               </div>
-              <Button className="mt-4 md:mt-0 bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
+              <Button className="mt-4 md:mt-0 bg-white hover:bg-gray-50 text-foreground border-2 border-secondary gap-2 font-semibold">
                 <Plus className="w-4 h-4" />
                 New Evaluation
               </Button>
