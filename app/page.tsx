@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Sidebar } from '@/components/sidebar'
-import { Topbar } from '@/components/topbar'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -97,18 +96,13 @@ export default function Page() {
   )
 
   return (
-    <div className="flex h-screen bg-white">
-      {/* Sidebar */}
+    <div className="flex flex-col min-h-screen bg-white">
+      {/* Top Navbar */}
       <Sidebar />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Topbar */}
-        <Topbar />
-
-        {/* Dashboard Content */}
-        <main className="flex-1 overflow-auto">
-          <div className="p-8">
+      <main className="flex-1 overflow-auto">
+        <div className="p-8">
             {/* Header Section */}
             <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
@@ -201,9 +195,8 @@ export default function Page() {
             <div className="mt-4 text-sm text-muted-foreground">
               Showing {filteredData.length} of {EVALUATION_DATA.length} evaluations
             </div>
-          </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   )
 }
