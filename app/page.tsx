@@ -14,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Plus, Search, ChevronUp, ChevronDown } from 'lucide-react'
+import { Plus, Search } from 'lucide-react'
 
 const EVALUATION_DATA = [
   {
@@ -22,9 +22,6 @@ const EVALUATION_DATA = [
     company: 'TechCorp Industries',
     riskLevel: 'Low',
     status: 'Completed',
-    rubricScore: 'High',
-    ourScore: 'High',
-    finalScore: 'High',
     lastUpdated: '2024-12-18',
   },
   {
@@ -32,9 +29,6 @@ const EVALUATION_DATA = [
     company: 'Global Finance Ltd',
     riskLevel: 'Medium',
     status: 'In Review',
-    rubricScore: 'Medium',
-    ourScore: 'Low',
-    finalScore: 'Medium',
     lastUpdated: '2024-12-17',
   },
   {
@@ -42,9 +36,6 @@ const EVALUATION_DATA = [
     company: 'Retail Solutions Inc',
     riskLevel: 'High',
     status: 'Pending',
-    rubricScore: 'Low',
-    ourScore: 'Medium',
-    finalScore: 'Low',
     lastUpdated: '2024-12-16',
   },
   {
@@ -52,9 +43,6 @@ const EVALUATION_DATA = [
     company: 'Energy Holdings Group',
     riskLevel: 'Medium',
     status: 'Completed',
-    rubricScore: 'High',
-    ourScore: 'Medium',
-    finalScore: 'Medium',
     lastUpdated: '2024-12-15',
   },
   {
@@ -62,9 +50,6 @@ const EVALUATION_DATA = [
     company: 'Healthcare Ventures Co',
     riskLevel: 'Low',
     status: 'Completed',
-    rubricScore: 'High',
-    ourScore: 'High',
-    finalScore: 'High',
     lastUpdated: '2024-12-14',
   },
   {
@@ -72,9 +57,6 @@ const EVALUATION_DATA = [
     company: 'Manufacturing Plus',
     riskLevel: 'High',
     status: 'In Review',
-    rubricScore: 'Medium',
-    ourScore: 'High',
-    finalScore: 'Medium',
     lastUpdated: '2024-12-13',
   },
 ]
@@ -108,38 +90,10 @@ function getStatusBadgeColor(status: string) {
 export default function Page() {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')
-  const [sortBy, setSortBy] = useState<'rubricScore' | 'ourScore' | 'finalScore' | null>(null)
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
-  const [rubricFilter, setRubricFilter] = useState<string>('')
-  const [ourScoreFilter, setOurScoreFilter] = useState<string>('')
-  const [finalScoreFilter, setFinalScoreFilter] = useState<string>('')
 
-  const scoreOrder = { High: 3, Medium: 2, Low: 1 }
-
-  const handleSort = (column: 'rubricScore' | 'ourScore' | 'finalScore') => {
-    if (sortBy === column) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
-    } else {
-      setSortBy(column)
-      setSortOrder('asc')
-    }
-  }
-
-  let filteredData = EVALUATION_DATA.filter((item) =>
-    item.company.toLowerCase().includes(searchQuery.toLowerCase()) &&
-    (rubricFilter === '' || item.rubricScore === rubricFilter) &&
-    (ourScoreFilter === '' || item.ourScore === ourScoreFilter) &&
-    (finalScoreFilter === '' || item.finalScore === finalScoreFilter)
+  const filteredData = EVALUATION_DATA.filter((item) =>
+    item.company.toLowerCase().includes(searchQuery.toLowerCase()),
   )
-
-  if (sortBy) {
-    filteredData.sort((a, b) => {
-      const aValue = scoreOrder[a[sortBy] as keyof typeof scoreOrder] || 0
-      const bValue = scoreOrder[b[sortBy] as keyof typeof scoreOrder] || 0
-      return sortOrder === 'asc' ? aValue - bValue : bValue - aValue
-    })
-  }
-
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -180,51 +134,6 @@ export default function Page() {
               </div>
             </Card>
 
-            {/* Filters Section */}
-            <Card className="p-4 mb-8 rounded-2xl shadow-sm border border-secondary/20">
-              <div className="flex flex-wrap gap-4 items-center">
-                <div className="flex items-center gap-2">
-                  <label className="text-sm font-medium text-foreground">Rubric Score:</label>
-                  <select
-                    value={rubricFilter}
-                    onChange={(e) => setRubricFilter(e.target.value)}
-                    className="px-3 py-2 rounded-lg border border-secondary/30 bg-white text-sm"
-                  >
-                    <option value="">All</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                  </select>
-                </div>
-                <div className="flex items-center gap-2">
-                  <label className="text-sm font-medium text-foreground">Our Score:</label>
-                  <select
-                    value={ourScoreFilter}
-                    onChange={(e) => setOurScoreFilter(e.target.value)}
-                    className="px-3 py-2 rounded-lg border border-secondary/30 bg-white text-sm"
-                  >
-                    <option value="">All</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                  </select>
-                </div>
-                <div className="flex items-center gap-2">
-                  <label className="text-sm font-medium text-foreground">Final Score:</label>
-                  <select
-                    value={finalScoreFilter}
-                    onChange={(e) => setFinalScoreFilter(e.target.value)}
-                    className="px-3 py-2 rounded-lg border border-secondary/30 bg-white text-sm"
-                  >
-                    <option value="">All</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                  </select>
-                </div>
-              </div>
-            </Card>
-
             {/* Table Section */}
             <Card className="rounded-2xl shadow-sm overflow-hidden border-t-4 border-t-primary">
               <div className="overflow-x-auto">
@@ -233,33 +142,9 @@ export default function Page() {
                     <TableRow className="border-b-2 border-b-secondary hover:bg-muted/30">
                       <TableHead className="font-semibold text-foreground">Company</TableHead>
                       <TableHead className="font-semibold text-primary">Satisfaction Level</TableHead>
-                      <TableHead 
-                        className="font-semibold text-secondary cursor-pointer hover:text-primary transition-colors flex items-center gap-1"
-                        onClick={() => handleSort('rubricScore')}
-                      >
-                        Rubric Score
-                        {sortBy === 'rubricScore' && (
-                          sortOrder === 'asc' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />
-                        )}
-                      </TableHead>
-                      <TableHead 
-                        className="font-semibold text-secondary cursor-pointer hover:text-primary transition-colors flex items-center gap-1"
-                        onClick={() => handleSort('ourScore')}
-                      >
-                        Our Score
-                        {sortBy === 'ourScore' && (
-                          sortOrder === 'asc' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />
-                        )}
-                      </TableHead>
-                      <TableHead 
-                        className="font-semibold text-secondary cursor-pointer hover:text-primary transition-colors flex items-center gap-1"
-                        onClick={() => handleSort('finalScore')}
-                      >
-                        Final Score
-                        {sortBy === 'finalScore' && (
-                          sortOrder === 'asc' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />
-                        )}
-                      </TableHead>
+                      <TableHead className="font-semibold text-secondary">Rubric Score</TableHead>
+                      <TableHead className="font-semibold text-secondary">Our Score</TableHead>
+                      <TableHead className="font-semibold text-secondary">Final Score</TableHead>
                       <TableHead className="font-semibold text-foreground">Date</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -284,30 +169,18 @@ export default function Page() {
                             </span>
                           </TableCell>
                           <TableCell>
-                            <span className={`text-sm font-medium px-3 py-1 rounded-full ${
-                              item.rubricScore === 'High' ? 'bg-blue-100 text-blue-700' :
-                              item.rubricScore === 'Medium' ? 'bg-orange-100 text-orange-700' :
-                              'bg-red-100 text-red-700'
-                            }`}>
-                              {item.rubricScore}
+                            <span className="text-sm font-medium px-3 py-1 rounded-full bg-blue-100 text-blue-700">
+                              High
                             </span>
                           </TableCell>
                           <TableCell>
-                            <span className={`text-sm font-medium px-3 py-1 rounded-full ${
-                              item.ourScore === 'High' ? 'bg-blue-100 text-blue-700' :
-                              item.ourScore === 'Medium' ? 'bg-orange-100 text-orange-700' :
-                              'bg-red-100 text-red-700'
-                            }`}>
-                              {item.ourScore}
+                            <span className="text-sm font-medium px-3 py-1 rounded-full bg-orange-100 text-orange-700">
+                              Medium
                             </span>
                           </TableCell>
                           <TableCell>
-                            <span className={`text-sm font-medium px-3 py-1 rounded-full ${
-                              item.finalScore === 'High' ? 'bg-blue-100 text-blue-700' :
-                              item.finalScore === 'Medium' ? 'bg-orange-100 text-orange-700' :
-                              'bg-red-100 text-red-700'
-                            }`}>
-                              {item.finalScore}
+                            <span className="text-sm font-medium px-3 py-1 rounded-full bg-red-100 text-red-700">
+                              Low
                             </span>
                           </TableCell>
                           <TableCell className="text-muted-foreground text-sm">
