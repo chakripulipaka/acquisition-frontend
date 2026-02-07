@@ -13,7 +13,6 @@ const _sora = Sora({ subsets: ['latin'], variable: '--font-sora' })
 export const metadata: Metadata = {
   title: 'Inquire',
   description: 'Inquire - AI-powered corporate research',
-  generator: 'v0.app',
 }
 
 export default function RootLayout({
