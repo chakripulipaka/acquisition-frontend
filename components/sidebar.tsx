@@ -24,16 +24,16 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="w-64 border-r border-border bg-sidebar text-sidebar-foreground h-screen flex flex-col">
-      {/* Logo/Brand Section */}
-      <div className="px-6 py-8 border-b-2 border-b-primary">
+    <nav className="w-full border-b-2 border-b-primary bg-white text-foreground h-16 flex items-center justify-between px-8 sticky top-0 z-20">
+      {/* Logo Section - Left */}
+      <div className="flex items-center flex-shrink-0">
         <Link href="/" className="flex items-center">
           <span className="font-sora font-light text-2xl text-primary">acquire</span>
         </Link>
       </div>
 
-      {/* Navigation Items */}
-      <nav className="flex-1 px-4 py-6 space-y-2">
+      {/* Navigation Items - Center */}
+      <div className="flex items-center gap-1 absolute left-1/2 transform -translate-x-1/2">
         {navItems.map((item) => {
           const Icon = item.icon
           const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))
@@ -43,28 +43,23 @@ export function Sidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                'flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-sm font-medium border-l-2',
+                'flex items-center gap-2 px-4 py-2 rounded-lg transition-all text-sm font-medium border-b-2',
                 isActive
-                  ? 'bg-sidebar-accent text-sidebar-primary border-l-primary'
-                  : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-primary border-l-transparent hover:border-l-secondary'
+                  ? 'bg-muted/20 text-primary border-b-primary'
+                  : 'text-foreground hover:bg-muted/10 hover:text-primary border-b-transparent hover:border-b-secondary'
               )}
             >
-              <Icon className="w-5 h-5" />
+              <Icon className="w-4 h-4" />
               <span>{item.label}</span>
             </Link>
           )
         })}
-      </nav>
-
-      {/* Username at Bottom Left */}
-      <div className="px-6 py-4 border-t-2 border-t-secondary">
-        <p className="text-sm font-medium text-sidebar-foreground">{PLACEHOLDER_USERNAME}</p>
       </div>
 
-      {/* Footer */}
-      <div className="px-6 py-2 pb-4">
-        <p className="text-xs text-sidebar-foreground/60">© 2024 Acquire</p>
+      {/* Username - Right */}
+      <div className="flex items-center flex-shrink-0">
+        <p className="text-sm font-medium text-foreground">{PLACEHOLDER_USERNAME}</p>
       </div>
-    </aside>
+    </nav>
   )
 }
