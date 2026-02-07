@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Sidebar } from '@/components/sidebar'
 import { Topbar } from '@/components/topbar'
 import { Card } from '@/components/ui/card'
@@ -88,6 +89,7 @@ function getStatusBadgeColor(status: string) {
 }
 
 export default function Page() {
+  const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredData = EVALUATION_DATA.filter((item) =>
@@ -117,7 +119,9 @@ export default function Page() {
                   Manage and track company risk assessments
                 </p>
               </div>
-              <Button className="mt-4 md:mt-0 bg-white hover:bg-gray-50 text-foreground border-2 border-secondary gap-2 font-semibold">
+              <Button 
+                onClick={() => router.push('/evaluation')}
+                className="mt-4 md:mt-0 bg-white hover:bg-gray-50 text-foreground border-2 border-secondary gap-2 font-semibold">
                 <Plus className="w-4 h-4" />
                 New Evaluation
               </Button>
