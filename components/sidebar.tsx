@@ -18,7 +18,7 @@ const navItems = [
   },
 ]
 
-const PLACEHOLDER_USERNAME = 'James Mitchell'
+const PLACEHOLDER_USERNAME = ''
 
 export function Sidebar() {
   const pathname = usePathname()
