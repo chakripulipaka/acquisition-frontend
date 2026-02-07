@@ -142,8 +142,10 @@ export default function Page() {
                     <TableRow className="border-b-2 border-b-secondary hover:bg-muted/30">
                       <TableHead className="font-semibold text-foreground">Company</TableHead>
                       <TableHead className="font-semibold text-primary">Satisfaction Level</TableHead>
-                      <TableHead className="font-semibold text-secondary">Status</TableHead>
-                      <TableHead className="font-semibold text-foreground">Last Updated</TableHead>
+                      <TableHead className="font-semibold text-secondary">Rubric Score</TableHead>
+                      <TableHead className="font-semibold text-secondary">Our Score</TableHead>
+                      <TableHead className="font-semibold text-secondary">Final Score</TableHead>
+                      <TableHead className="font-semibold text-foreground">Date</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -167,12 +169,18 @@ export default function Page() {
                             </span>
                           </TableCell>
                           <TableCell>
-                            <span
-                              className={`text-sm font-medium px-3 py-1 rounded-full ${getStatusBadgeColor(
-                                item.status,
-                              )}`}
-                            >
-                              {item.status}
+                            <span className="text-sm font-medium px-3 py-1 rounded-full bg-blue-100 text-blue-700">
+                              High
+                            </span>
+                          </TableCell>
+                          <TableCell>
+                            <span className="text-sm font-medium px-3 py-1 rounded-full bg-orange-100 text-orange-700">
+                              Medium
+                            </span>
+                          </TableCell>
+                          <TableCell>
+                            <span className="text-sm font-medium px-3 py-1 rounded-full bg-red-100 text-red-700">
+                              Low
                             </span>
                           </TableCell>
                           <TableCell className="text-muted-foreground text-sm">
@@ -183,7 +191,7 @@ export default function Page() {
                     ) : (
                       <TableRow>
                         <TableCell
-                          colSpan={4}
+                          colSpan={6}
                           className="text-center py-8 text-muted-foreground"
                         >
                           No evaluations found matching your search.
