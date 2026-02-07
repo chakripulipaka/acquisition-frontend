@@ -2,8 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BarChart3, Settings, Plus, User } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { BarChart3, Settings, Plus } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
@@ -23,6 +22,8 @@ const navItems = [
     icon: Settings,
   },
 ]
+
+const PLACEHOLDER_USERNAME = 'James Mitchell'
 
 export function Sidebar() {
   const pathname = usePathname()
@@ -63,19 +64,13 @@ export function Sidebar() {
         })}
       </nav>
 
-      {/* Profile Button at Bottom */}
-      <div className="px-4 py-4 border-t border-sidebar-border">
-        <Button
-          variant="ghost"
-          className="w-full flex items-center gap-3 justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-primary"
-        >
-          <User className="w-5 h-5" />
-          <span className="text-sm font-medium">Profile</span>
-        </Button>
+      {/* Username at Bottom Left */}
+      <div className="px-6 py-4 border-t border-sidebar-border">
+        <p className="text-sm font-medium text-sidebar-foreground">{PLACEHOLDER_USERNAME}</p>
       </div>
 
       {/* Footer */}
-      <div className="px-6 py-4 border-t border-sidebar-border">
+      <div className="px-6 py-2 pb-4">
         <p className="text-xs text-sidebar-foreground/60">© 2024 Acquire</p>
       </div>
     </aside>
