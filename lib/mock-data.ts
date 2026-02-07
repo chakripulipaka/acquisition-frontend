@@ -10,10 +10,8 @@ function uuid() {
   })
 }
 
-function daysAgo(n: number) {
-  const d = new Date()
-  d.setDate(d.getDate() - n)
-  return d.toISOString()
+function fixedDate(day: 6 | 7, hour: number) {
+  return `2026-02-0${day}T${String(hour).padStart(2, '0')}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}:00.000Z`
 }
 
 function pick<T>(arr: T[]): T {
@@ -226,7 +224,7 @@ function buildSource(companyName: string): Source {
     name: tpl.name,
     url: tpl.url,
     publisher: tpl.publisher,
-    publishedDate: daysAgo(Math.floor(Math.random() * 365)),
+    publishedDate: fixedDate(Math.random() > 0.5 ? 7 : 6, Math.floor(Math.random() * 24)),
     excerptText: tpl.excerpt,
     highlights: [{ startIndex: 0, endIndex: Math.min(60, tpl.excerpt.length) }],
     pageNumber: Math.floor(Math.random() * 20) + 1,
@@ -278,12 +276,13 @@ function buildEvaluation(
   website: string,
   policyScoreRange: [number, number],
   generalScoreRange: [number, number],
-  daysOffset: number,
+  day: 6 | 7,
+  hour: number,
 ): SupabaseEvaluation {
   const evalId = uuid()
   const rubricId = uuid()
   const resultId = uuid()
-  const createdAt = daysAgo(daysOffset)
+  const createdAt = fixedDate(day, hour)
 
   const yourPolicyItems = buildRubricItems(companyName, 5 + Math.floor(Math.random() * 3), policyScoreRange[0], policyScoreRange[1])
   const generalPolicyItems = buildRubricItems(companyName, 5 + Math.floor(Math.random() * 3), generalScoreRange[0], generalScoreRange[1])
@@ -330,21 +329,43 @@ function buildEvaluation(
 // ── Seed Data ────────────────────────────────────────────────────────────────
 
 export const MOCK_EVALUATIONS: SupabaseEvaluation[] = [
-  buildEvaluation('Meridian Capital Group', 'Financial Services', 'https://meridiancapital.com', [7.5, 9.5], [7.0, 9.0], 3),
-  buildEvaluation('Apex Cloud Solutions', 'Technology', 'https://apexcloud.io', [5.5, 7.5], [5.0, 7.8], 5),
-  buildEvaluation('GreenLeaf Pharmaceuticals', 'Healthcare', 'https://greenleafpharma.com', [3.0, 5.5], [2.5, 5.0], 7),
-  buildEvaluation('Titan Manufacturing Co.', 'Manufacturing', 'https://titanmfg.com', [7.8, 9.8], [7.5, 9.5], 10),
-  buildEvaluation('Solaris Energy Partners', 'Energy', 'https://solarisenergy.com', [5.0, 7.0], [5.5, 7.5], 12),
-  buildEvaluation('Pinnacle Retail Holdings', 'Retail', 'https://pinnacleretail.com', [8.0, 9.5], [7.5, 9.0], 15),
-  buildEvaluation('Vanguard Logistics Inc.', 'Transportation', 'https://vanguardlogistics.com', [3.5, 5.5], [3.0, 5.0], 18),
-  buildEvaluation('NovaTech Communications', 'Telecommunications', 'https://novatechcomm.com', [5.5, 7.8], [5.0, 7.5], 22),
-  buildEvaluation('Harborview Real Estate', 'Real Estate', 'https://harborviewre.com', [7.5, 9.0], [8.0, 9.5], 25),
-  buildEvaluation('Quantum Data Systems', 'Technology', 'https://quantumdata.io', [3.0, 5.0], [3.5, 5.5], 28),
-  buildEvaluation('Pacific Coast Financial', 'Financial Services', 'https://pacificcoastfin.com', [5.5, 7.5], [6.0, 8.0], 32),
-  buildEvaluation('Atlas Healthcare Group', 'Healthcare', 'https://atlashealthcare.com', [8.0, 9.5], [7.5, 9.0], 38),
-  buildEvaluation('Sterling Construction', 'Manufacturing', 'https://sterlingconstruction.com', [5.0, 7.0], [5.5, 7.5], 42),
-  buildEvaluation('Brightpath Education', 'Other', 'https://brightpathedu.org', [7.5, 9.0], [8.0, 9.5], 48),
-  buildEvaluation('Redwood Analytics', 'Technology', 'https://redwoodanalytics.com', [5.5, 7.5], [5.0, 7.0], 55),
+  // Feb 7 evaluations
+  buildEvaluation('Ramp', 'Financial Services', 'https://ramp.com', [8.0, 9.5], [7.5, 9.0], 7, 14),
+  buildEvaluation('Anduril Industries', 'Technology', 'https://anduril.com', [5.5, 7.5], [5.0, 7.8], 7, 13),
+  buildEvaluation('Cerebras Systems', 'Technology', 'https://cerebras.net', [3.0, 5.5], [2.5, 5.0], 7, 11),
+  buildEvaluation('Flexport', 'Transportation', 'https://flexport.com', [7.8, 9.8], [7.5, 9.5], 7, 10),
+  buildEvaluation('Abridge', 'Healthcare', 'https://abridge.com', [5.0, 7.0], [5.5, 7.5], 7, 9),
+  buildEvaluation('Faire', 'Retail', 'https://faire.com', [8.0, 9.5], [7.5, 9.0], 7, 8),
+  buildEvaluation('Samsara', 'Manufacturing', 'https://samsara.com', [3.5, 5.5], [3.0, 5.0], 7, 7),
+  buildEvaluation('Wiz', 'Technology', 'https://wiz.io', [8.5, 9.8], [8.0, 9.5], 7, 6),
+  // Feb 6 evaluations
+  buildEvaluation('Rippling', 'Technology', 'https://rippling.com', [7.5, 9.0], [8.0, 9.5], 6, 16),
+  buildEvaluation('Brex', 'Financial Services', 'https://brex.com', [3.0, 5.0], [3.5, 5.5], 6, 15),
+  buildEvaluation('Nuvocargo', 'Transportation', 'https://nuvocargo.com', [5.5, 7.5], [6.0, 8.0], 6, 13),
+  buildEvaluation('Hims & Hers', 'Healthcare', 'https://forhims.com', [8.0, 9.5], [7.5, 9.0], 6, 11),
+  buildEvaluation('Watershed', 'Energy', 'https://watershed.com', [5.0, 7.0], [5.5, 7.5], 6, 10),
+  buildEvaluation('Loft Orbital', 'Manufacturing', 'https://loftorbital.com', [7.5, 9.0], [8.0, 9.5], 6, 9),
+  buildEvaluation('Nowports', 'Transportation', 'https://nowports.com', [5.5, 7.5], [5.0, 7.0], 6, 8),
+]
+
+// ── Fake Policy Documents ────────────────────────────────────────────────────
+
+export interface MockDocument {
+  id: string
+  name: string
+  size: number
+  uploadedAt: string
+}
+
+export const MOCK_DOCUMENTS: MockDocument[] = [
+  { id: 'doc-001', name: 'Customer Acquisition Policy v4.2.pdf', size: 2458624, uploadedAt: '2/6/2026' },
+  { id: 'doc-002', name: 'AML-KYC Compliance Manual 2026.pdf', size: 1843200, uploadedAt: '2/6/2026' },
+  { id: 'doc-003', name: 'Third-Party Risk Management Framework.pdf', size: 3145728, uploadedAt: '2/6/2026' },
+  { id: 'doc-004', name: 'Data Protection & Privacy Policy.docx', size: 987136, uploadedAt: '2/6/2026' },
+  { id: 'doc-005', name: 'Enterprise Risk Management Policy.pdf', size: 1572864, uploadedAt: '2/6/2026' },
+  { id: 'doc-006', name: 'Vendor Due Diligence Checklist.pdf', size: 524288, uploadedAt: '2/7/2026' },
+  { id: 'doc-007', name: 'Information Security Policy v3.1.pdf', size: 2097152, uploadedAt: '2/7/2026' },
+  { id: 'doc-008', name: 'Sanctions Screening Procedures.docx', size: 768000, uploadedAt: '2/7/2026' },
 ]
 
 // ── Generator for new evaluations ────────────────────────────────────────────
@@ -368,6 +389,7 @@ export function generateFakeEvaluation(
     website,
     [basePolicyMin, Math.min(basePolicyMax, 10)],
     [baseGeneralMin, Math.min(baseGeneralMax, 10)],
-    0, // today
+    7,
+    new Date().getHours(),
   )
 }
