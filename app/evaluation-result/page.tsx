@@ -41,18 +41,18 @@ export default function EvaluationResult() {
             {/* Back Button */}
             <button
               onClick={() => router.back()}
-              className="flex items-center gap-2 text-foreground hover:text-primary mb-6 font-medium transition-colors"
+              className="flex items-center gap-2 text-secondary hover:text-primary mb-6 font-medium transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Evaluations
             </button>
 
             {/* Main Header Section - Risk Assessment Card */}
-            <Card className={`p-8 mb-8 border-2 ${riskConfig.borderColor} shadow-sm rounded-2xl`}>
+            <Card className={`p-8 mb-8 border-l-4 border-l-primary shadow-sm rounded-2xl`}>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                 {/* Left: Company Info */}
                 <div className="flex-1">
-                  <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide mb-2">
+                  <p className="text-sm text-primary font-medium uppercase tracking-wide mb-2">
                     Evaluation Result
                   </p>
                   <h1 className="text-4xl font-bold text-foreground mb-4">{company}</h1>

@@ -154,11 +154,11 @@ export default function EvaluationPage() {
             </div>
 
             {/* Form Card */}
-            <Card className="border-0 shadow-sm max-w-2xl rounded-2xl">
+            <Card className="border-0 shadow-sm max-w-2xl rounded-2xl border-l-4 border-l-primary">
               <form onSubmit={handleSubmit} className="p-8 space-y-6">
                 {/* Company Name */}
                 <div className="space-y-2">
-                  <Label htmlFor="companyName" className="text-foreground font-semibold">
+                  <Label htmlFor="companyName" className="text-foreground font-semibold text-primary">
                     Company Name *
                   </Label>
                   <Input
@@ -167,14 +167,14 @@ export default function EvaluationPage() {
                     placeholder="Enter company name"
                     value={formData.companyName}
                     onChange={handleInputChange}
-                    className="bg-white"
+                    className="bg-white border-2 border-secondary/30 focus:border-secondary"
                     required
                   />
                 </div>
 
                 {/* Company Website */}
                 <div className="space-y-2">
-                  <Label htmlFor="companyWebsite" className="text-foreground font-semibold">
+                  <Label htmlFor="companyWebsite" className="text-foreground font-semibold text-secondary">
                     Company Website
                   </Label>
                   <Input
@@ -184,17 +184,17 @@ export default function EvaluationPage() {
                     placeholder="https://example.com"
                     value={formData.companyWebsite}
                     onChange={handleInputChange}
-                    className="bg-white"
+                    className="bg-white border-2 border-secondary/30 focus:border-secondary"
                   />
                 </div>
 
                 {/* Industry Dropdown */}
                 <div className="space-y-2">
-                  <Label htmlFor="industry" className="text-foreground font-semibold">
+                  <Label htmlFor="industry" className="text-foreground font-semibold text-primary">
                     Industry
                   </Label>
                   <Select value={formData.industry} onValueChange={handleIndustryChange}>
-                    <SelectTrigger id="industry" className="bg-white">
+                    <SelectTrigger id="industry" className="bg-white border-2 border-secondary/30 focus:border-secondary">
                       <SelectValue placeholder="Select an industry (optional)" />
                     </SelectTrigger>
                     <SelectContent>
@@ -209,7 +209,7 @@ export default function EvaluationPage() {
 
                 {/* Additional Information */}
                 <div className="space-y-2">
-                  <Label htmlFor="additionalInfo" className="text-foreground font-semibold">
+                  <Label htmlFor="additionalInfo" className="text-foreground font-semibold text-secondary">
                     Additional Information
                   </Label>
                   <p className="text-sm text-muted-foreground mb-2">
@@ -221,19 +221,19 @@ export default function EvaluationPage() {
                     placeholder="Enter any additional information about the company..."
                     value={formData.additionalInfo}
                     onChange={handleInputChange}
-                    className="bg-white min-h-[120px]"
+                    className="bg-white min-h-[120px] border-2 border-secondary/30 focus:border-secondary"
                   />
                 </div>
 
                 {/* File Upload */}
                 <div className="space-y-2">
-                  <Label htmlFor="policyFile" className="text-foreground font-semibold">
+                  <Label htmlFor="policyFile" className="text-foreground font-semibold text-primary">
                     Policy / Guideline Document *
                   </Label>
                   <p className="text-sm text-muted-foreground mb-3">
                     Upload the policy or guideline document (PDF, DOC, DOCX)
                   </p>
-                  <div className="border-2 border-dashed border-border rounded-lg p-6 hover:border-primary/50 transition-colors">
+                  <div className="border-2 border-dashed border-primary/40 rounded-lg p-6 hover:border-primary/70 transition-colors">
                     <input
                       id="policyFile"
                       type="file"
@@ -246,7 +246,7 @@ export default function EvaluationPage() {
                       htmlFor="policyFile"
                       className="flex flex-col items-center justify-center cursor-pointer"
                     >
-                      <Upload className="w-8 h-8 text-muted-foreground mb-2" />
+                      <Upload className="w-8 h-8 text-primary mb-2" />
                       {fileName ? (
                         <>
                           <p className="text-sm font-medium text-foreground">{fileName}</p>
@@ -265,7 +265,7 @@ export default function EvaluationPage() {
                 </div>
 
                 {/* Form Actions */}
-                <div className="flex gap-4 pt-6 border-t border-border">
+                <div className="flex gap-4 pt-6 border-t-2 border-t-secondary">
                   <Button
                     type="button"
                     variant="outline"
@@ -286,9 +286,9 @@ export default function EvaluationPage() {
             </Card>
 
             {/* Info Box */}
-            <div className="mt-8 max-w-2xl bg-blue-50 border border-blue-100 rounded-lg p-4">
-              <p className="text-sm text-blue-900">
-                <span className="font-semibold">Note:</span> Your evaluation will be processed
+            <div className="mt-8 max-w-2xl bg-secondary/5 border-l-4 border-l-secondary rounded-lg p-4">
+              <p className="text-sm text-foreground">
+                <span className="font-semibold text-secondary">Note:</span> Your evaluation will be processed
                 and you'll receive a comprehensive assessment report within 24 hours.
               </p>
             </div>

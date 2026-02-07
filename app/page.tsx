@@ -124,9 +124,9 @@ export default function Page() {
             </div>
 
             {/* Search Section */}
-            <Card className="p-6 mb-8 rounded-2xl shadow-sm">
+            <Card className="p-6 mb-8 rounded-2xl shadow-sm border-l-4 border-l-secondary">
               <div className="relative">
-                <Search className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
+                <Search className="absolute left-3 top-3 w-5 h-5 text-secondary" />
                 <Input
                   placeholder="Search companies..."
                   className="pl-10 rounded-lg"
@@ -137,14 +137,14 @@ export default function Page() {
             </Card>
 
             {/* Table Section */}
-            <Card className="rounded-2xl shadow-sm overflow-hidden">
+            <Card className="rounded-2xl shadow-sm overflow-hidden border-t-4 border-t-primary">
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader className="bg-muted/30">
-                    <TableRow className="border-b border-border hover:bg-muted/30">
+                    <TableRow className="border-b-2 border-b-secondary hover:bg-muted/30">
                       <TableHead className="font-semibold text-foreground">Company</TableHead>
-                      <TableHead className="font-semibold text-foreground">Satisfaction Level</TableHead>
-                      <TableHead className="font-semibold text-foreground">Status</TableHead>
+                      <TableHead className="font-semibold text-primary">Satisfaction Level</TableHead>
+                      <TableHead className="font-semibold text-secondary">Status</TableHead>
                       <TableHead className="font-semibold text-foreground">Last Updated</TableHead>
                     </TableRow>
                   </TableHeader>

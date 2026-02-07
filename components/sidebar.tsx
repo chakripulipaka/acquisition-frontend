@@ -26,9 +26,9 @@ export function Sidebar() {
   return (
     <aside className="w-64 border-r border-border bg-sidebar text-sidebar-foreground h-screen flex flex-col">
       {/* Logo/Brand Section */}
-      <div className="px-6 py-8 border-b border-sidebar-border">
+      <div className="px-6 py-8 border-b-2 border-b-primary">
         <Link href="/" className="flex items-center">
-          <span className="font-sora font-light text-2xl text-sidebar-foreground">acquire</span>
+          <span className="font-sora font-light text-2xl text-primary">acquire</span>
         </Link>
       </div>
 
@@ -43,10 +43,10 @@ export function Sidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                'flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-sm font-medium',
+                'flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-sm font-medium border-l-2',
                 isActive
-                  ? 'bg-sidebar-accent text-sidebar-primary'
-                  : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-primary'
+                  ? 'bg-sidebar-accent text-sidebar-primary border-l-primary'
+                  : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-primary border-l-transparent hover:border-l-secondary'
               )}
             >
               <Icon className="w-5 h-5" />
@@ -57,7 +57,7 @@ export function Sidebar() {
       </nav>
 
       {/* Username at Bottom Left */}
-      <div className="px-6 py-4 border-t border-sidebar-border">
+      <div className="px-6 py-4 border-t-2 border-t-secondary">
         <p className="text-sm font-medium text-sidebar-foreground">{PLACEHOLDER_USERNAME}</p>
       </div>
 
