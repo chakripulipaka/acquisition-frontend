@@ -28,7 +28,7 @@ export function Sidebar() {
       {/* Logo Section - Left */}
       <div className="flex items-center flex-shrink-0">
         <Link href="/" className="flex items-center">
-          <span className="font-sora font-light text-2xl text-primary">acquire</span>
+          <span className="font-sora font-bold italic text-2xl text-black">acquire</span>
         </Link>
       </div>
 
