@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react"
+import React from 'react'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -18,7 +18,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { CheckCircle2 } from 'lucide-react'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+import { CheckCircle2, Upload } from 'lucide-react'
 
 const INDUSTRIES = [
   'Technology',
@@ -37,12 +46,15 @@ export default function EvaluationPage() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [showCancelDialog, setShowCancelDialog] = useState(false)
   const [formData, setFormData] = useState({
     companyName: '',
     companyWebsite: '',
-    policy: '',
     industry: '',
+    additionalInfo: '',
+    policyFile: null as File | null,
   })
+  const [fileName, setFileName] = useState('')
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -61,6 +73,17 @@ export default function EvaluationPage() {
     }))
   }
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setFormData((prev) => ({
+        ...prev,
+        policyFile: file,
+      }))
+      setFileName(file.name)
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
@@ -75,6 +98,15 @@ export default function EvaluationPage() {
     setTimeout(() => {
       router.push('/')
     }, 2000)
+  }
+
+  const handleCancelClick = () => {
+    setShowCancelDialog(true)
+  }
+
+  const handleConfirmCancel = () => {
+    setShowCancelDialog(false)
+    router.push('/')
   }
 
   if (isSuccess) {
@@ -102,7 +134,7 @@ export default function EvaluationPage() {
     )
   }
 
-  const isFormValid = formData.companyName.trim() && formData.policy.trim()
+  const isFormValid = formData.companyName.trim() && formData.policyFile
 
   return (
     <div className="flex h-screen bg-white">
@@ -117,7 +149,7 @@ export default function EvaluationPage() {
                 New Evaluation
               </h1>
               <p className="text-muted-foreground">
-                Provide company details and guidelines for risk assessment
+                Provide company details and policy guidelines for evaluation
               </p>
             </div>
 
@@ -175,23 +207,61 @@ export default function EvaluationPage() {
                   </Select>
                 </div>
 
-                {/* Policy/Guideline Textarea */}
+                {/* Additional Information */}
                 <div className="space-y-2">
-                  <Label htmlFor="policy" className="text-foreground font-semibold">
-                    Policy / Guideline *
+                  <Label htmlFor="additionalInfo" className="text-foreground font-semibold">
+                    Additional Information
                   </Label>
                   <p className="text-sm text-muted-foreground mb-2">
-                    Provide relevant policies, financial guidelines, or specific evaluation criteria
+                    Provide any additional details about the company to help identify and retrieve information
                   </p>
                   <Textarea
-                    id="policy"
-                    name="policy"
-                    placeholder="Enter company policy or evaluation guidelines..."
-                    value={formData.policy}
+                    id="additionalInfo"
+                    name="additionalInfo"
+                    placeholder="Enter any additional information about the company..."
+                    value={formData.additionalInfo}
                     onChange={handleInputChange}
-                    className="bg-white min-h-[200px]"
-                    required
+                    className="bg-white min-h-[120px]"
                   />
+                </div>
+
+                {/* File Upload */}
+                <div className="space-y-2">
+                  <Label htmlFor="policyFile" className="text-foreground font-semibold">
+                    Policy / Guideline Document *
+                  </Label>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Upload the policy or guideline document (PDF, DOC, DOCX)
+                  </p>
+                  <div className="border-2 border-dashed border-border rounded-lg p-6 hover:border-primary/50 transition-colors">
+                    <input
+                      id="policyFile"
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      onChange={handleFileChange}
+                      className="hidden"
+                      required
+                    />
+                    <label
+                      htmlFor="policyFile"
+                      className="flex flex-col items-center justify-center cursor-pointer"
+                    >
+                      <Upload className="w-8 h-8 text-muted-foreground mb-2" />
+                      {fileName ? (
+                        <>
+                          <p className="text-sm font-medium text-foreground">{fileName}</p>
+                          <p className="text-xs text-muted-foreground">Click to change file</p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-sm font-medium text-foreground">
+                            Drag and drop your file here
+                          </p>
+                          <p className="text-xs text-muted-foreground">or click to browse</p>
+                        </>
+                      )}
+                    </label>
+                  </div>
                 </div>
 
                 {/* Form Actions */}
@@ -199,8 +269,8 @@ export default function EvaluationPage() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => router.push('/')}
-                    className="flex-1"
+                    onClick={handleCancelClick}
+                    className="flex-1 bg-transparent"
                   >
                     Cancel
                   </Button>
@@ -219,12 +289,35 @@ export default function EvaluationPage() {
             <div className="mt-8 max-w-2xl bg-blue-50 border border-blue-100 rounded-lg p-4">
               <p className="text-sm text-blue-900">
                 <span className="font-semibold">Note:</span> Your evaluation will be processed
-                and you'll receive a comprehensive risk assessment report within 24 hours.
+                and you'll receive a comprehensive assessment report within 24 hours.
               </p>
             </div>
           </div>
         </main>
       </div>
+
+      {/* Cancel Confirmation Dialog */}
+      <AlertDialog open={showCancelDialog} onOpenChange={setShowCancelDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Exit Evaluation?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you'd like to exit? Any unsaved information will be lost.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="flex gap-3 justify-end">
+            <AlertDialogCancel onClick={() => setShowCancelDialog(false)}>
+              Keep Editing
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmCancel}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
+              Exit
+            </AlertDialogAction>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }
