@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
 @layer utilities {
@@ -14,74 +14,108 @@ body {
 
 @layer base {
   :root {
-    /* Fintech SaaS - Capital One Inspired */
+    /* Capital One Inspired Design System */
+    /* Background & Text */
     --background: 0 0% 100%;
-    --foreground: 0 0% 15%;
+    --foreground: 0 0% 13%;
+    
+    /* Cards & Surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 15%;
+    --card-foreground: 0 0% 13%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 15%;
-    --primary: 0 88% 53%;
+    --popover-foreground: 0 0% 13%;
+    
+    /* Primary Red (Capital One) - #C8102E */
+    --primary: 349 93% 43%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 100% 50%;
+    
+    /* Secondary Blue (Trust) - #004977 */
+    --secondary: 196 100% 29%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 92%;
-    --muted-foreground: 0 0% 48%;
-    --accent: 220 100% 50%;
+    
+    /* Muted Gray - #6B7280 */
+    --muted: 0 0% 56%;
+    --muted-foreground: 0 0% 42%;
+    
+    /* Accent Blue for links */
+    --accent: 196 100% 29%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 90%;
-    --input: 0 0% 95%;
-    --ring: 0 88% 53%;
-    --chart-1: 0 88% 53%;
-    --chart-2: 220 100% 50%;
-    --chart-3: 0 0% 60%;
-    --chart-4: 0 88% 65%;
-    --chart-5: 220 100% 65%;
-    --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 20%;
-    --sidebar-primary: 0 88% 53%;
+    
+    /* Success Green - #16A34A */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    
+    /* Warning Amber - #F59E0B */
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Borders & Inputs */
+    --border: 0 0% 92%;
+    --input: 0 0% 97%;
+    --ring: 349 93% 43%;
+    
+    /* Chart Colors */
+    --chart-1: 349 93% 43%;
+    --chart-2: 196 100% 29%;
+    --chart-3: 142 71% 45%;
+    --chart-4: 38 92% 50%;
+    --chart-5: 0 84% 60%;
+    
+    /* Radius - 2xl as per design */
+    --radius: 1rem;
+    
+    /* Sidebar */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 13%;
+    --sidebar-primary: 349 93% 43%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 90%;
-    --sidebar-accent-foreground: 0 88% 53%;
-    --sidebar-border: 0 0% 88%;
-    --sidebar-ring: 220 100% 50%;
+    --sidebar-accent: 0 0% 94%;
+    --sidebar-accent-foreground: 349 93% 43%;
+    --sidebar-border: 0 0% 92%;
+    --sidebar-ring: 349 93% 43%;
   }
+  
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 88% 53%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 100% 50%;
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 349 93% 55%;
+    --primary-foreground: 0 0% 8%;
+    --secondary: 196 100% 40%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 220 100% 50%;
+    --muted: 0 0% 60%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 196 100% 40%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 18%;
+    --success: 142 71% 55%;
+    --success-foreground: 0 0% 8%;
+    --warning: 38 92% 60%;
+    --warning-foreground: 0 0% 8%;
+    --destructive: 0 84% 70%;
+    --destructive-foreground: 0 0% 8%;
+    --border: 0 0% 20%;
     --input: 0 0% 18%;
-    --ring: 220 100% 50%;
-    --chart-1: 0 88% 53%;
-    --chart-2: 220 100% 50%;
-    --chart-3: 0 0% 60%;
-    --chart-4: 0 88% 65%;
-    --chart-5: 220 100% 65%;
-    --sidebar-background: 0 0% 8%;
+    --ring: 349 93% 55%;
+    --chart-1: 349 93% 55%;
+    --chart-2: 196 100% 40%;
+    --chart-3: 142 71% 55%;
+    --chart-4: 38 92% 60%;
+    --chart-5: 0 84% 70%;
+    --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 92%;
-    --sidebar-primary: 0 88% 53%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 18%;
-    --sidebar-accent-foreground: 0 88% 53%;
-    --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 220 100% 50%;
+    --sidebar-primary: 349 93% 55%;
+    --sidebar-primary-foreground: 0 0% 8%;
+    --sidebar-accent: 0 0% 20%;
+    --sidebar-accent-foreground: 349 93% 55%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 349 93% 55%;
   }
 }
 
@@ -93,3 +127,27 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom utility classes for enterprise design */
+@layer components {
+  .card-subtle {
+    @apply rounded-2xl bg-card shadow-sm border border-border;
+  }
+  
+  .card-elevated {
+    @apply rounded-2xl bg-card shadow-md border border-border;
+  }
+  
+  .text-muted {
+    @apply text-muted-foreground;
+  }
+  
+  .btn-primary {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-medium;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary hover:bg-secondary/90 text-secondary-foreground rounded-lg font-medium;
+  }
+}
+

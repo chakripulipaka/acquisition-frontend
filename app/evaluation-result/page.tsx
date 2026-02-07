@@ -8,9 +8,9 @@ import { ArrowLeft, CheckCircle2, AlertCircle, HelpCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 const RISK_LEVELS = {
-  Low: { color: 'bg-green-50', textColor: 'text-green-700', borderColor: 'border-green-200' },
-  Medium: { color: 'bg-amber-50', textColor: 'text-amber-700', borderColor: 'border-amber-200' },
-  High: { color: 'bg-red-50', textColor: 'text-red-700', borderColor: 'border-red-200' },
+  Low: { color: 'bg-success/10', textColor: 'text-success', borderColor: 'border-success/20' },
+  Medium: { color: 'bg-warning/10', textColor: 'text-warning', borderColor: 'border-warning/20' },
+  High: { color: 'bg-primary/10', textColor: 'text-primary', borderColor: 'border-primary/20' },
 }
 
 export default function EvaluationResult() {
@@ -48,7 +48,7 @@ export default function EvaluationResult() {
             </button>
 
             {/* Main Header Section - Risk Assessment Card */}
-            <Card className={`p-8 mb-8 border-2 ${riskConfig.borderColor} shadow-md`}>
+            <Card className={`p-8 mb-8 border-2 ${riskConfig.borderColor} shadow-sm rounded-2xl`}>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                 {/* Left: Company Info */}
                 <div className="flex-1">

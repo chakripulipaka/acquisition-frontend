@@ -64,26 +64,26 @@ const EVALUATION_DATA = [
 function getRiskBadgeColor(risk: string) {
   switch (risk) {
     case 'Low':
-      return 'bg-green-50 text-green-700'
+      return 'bg-success/10 text-success'
     case 'Medium':
-      return 'bg-yellow-50 text-yellow-700'
+      return 'bg-warning/10 text-warning'
     case 'High':
-      return 'bg-red-50 text-red-700'
+      return 'bg-primary/10 text-primary'
     default:
-      return 'bg-gray-50 text-gray-700'
+      return 'bg-muted/20 text-muted-foreground'
   }
 }
 
 function getStatusBadgeColor(status: string) {
   switch (status) {
     case 'Completed':
-      return 'bg-green-50 text-green-700'
+      return 'bg-success/10 text-success'
     case 'In Review':
-      return 'bg-blue-50 text-blue-700'
+      return 'bg-secondary/10 text-secondary'
     case 'Pending':
-      return 'bg-gray-100 text-gray-700'
+      return 'bg-muted/20 text-muted-foreground'
     default:
-      return 'bg-gray-50 text-gray-700'
+      return 'bg-muted/20 text-muted-foreground'
   }
 }
 
@@ -124,12 +124,12 @@ export default function Page() {
             </div>
 
             {/* Search Section */}
-            <Card className="p-6 mb-8 border-0 shadow-sm">
+            <Card className="p-6 mb-8 rounded-2xl shadow-sm">
               <div className="relative">
                 <Search className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
                 <Input
                   placeholder="Search companies..."
-                  className="pl-10"
+                  className="pl-10 rounded-lg"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -137,21 +137,21 @@ export default function Page() {
             </Card>
 
             {/* Table Section */}
-            <Card className="border-0 shadow-sm overflow-hidden">
+            <Card className="rounded-2xl shadow-sm overflow-hidden">
               <div className="overflow-x-auto">
                 <Table>
-                  <TableHeader className="bg-gray-50">
-                    <TableRow className="border-b hover:bg-gray-50">
-                      <TableHead className="font-semibold">Company</TableHead>
-                      <TableHead className="font-semibold">Satisfaction Level</TableHead>
-                      <TableHead className="font-semibold">Status</TableHead>
-                      <TableHead className="font-semibold">Last Updated</TableHead>
+                  <TableHeader className="bg-muted/30">
+                    <TableRow className="border-b border-border hover:bg-muted/30">
+                      <TableHead className="font-semibold text-foreground">Company</TableHead>
+                      <TableHead className="font-semibold text-foreground">Satisfaction Level</TableHead>
+                      <TableHead className="font-semibold text-foreground">Status</TableHead>
+                      <TableHead className="font-semibold text-foreground">Last Updated</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {filteredData.length > 0 ? (
                       filteredData.map((item) => (
-                        <TableRow key={item.id} className="hover:bg-gray-50/50">
+                        <TableRow key={item.id} className="hover:bg-muted/10">
                           <TableCell className="font-medium text-foreground">
                             {item.company}
                           </TableCell>

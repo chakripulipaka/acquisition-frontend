@@ -154,7 +154,7 @@ export default function EvaluationPage() {
             </div>
 
             {/* Form Card */}
-            <Card className="border-0 shadow-sm max-w-2xl">
+            <Card className="border-0 shadow-sm max-w-2xl rounded-2xl">
               <form onSubmit={handleSubmit} className="p-8 space-y-6">
                 {/* Company Name */}
                 <div className="space-y-2">
