@@ -1,6 +1,7 @@
-import React from "react"
+import React from 'react'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Sora } from 'next/font/google'
+import { DocumentsProvider } from '@/contexts/documents-context'
 
 import './globals.css'
 
@@ -21,7 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={_sora.variable}>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <DocumentsProvider>{children}</DocumentsProvider>
+      </body>
     </html>
   )
 }
+

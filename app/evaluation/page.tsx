@@ -27,7 +27,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { CheckCircle2, Upload } from 'lucide-react'
+import { CheckCircle2, Upload, FileText } from 'lucide-react'
+import { useDocuments } from '@/contexts/documents-context'
 
 const INDUSTRIES = [
   'Technology',
@@ -44,9 +45,11 @@ const INDUSTRIES = [
 
 export default function EvaluationPage() {
   const router = useRouter()
+  const { documents } = useDocuments()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [showCancelDialog, setShowCancelDialog] = useState(false)
+  const [useStoredDocument, setUseStoredDocument] = useState('')
   const [formData, setFormData] = useState({
     companyName: '',
     companyWebsite: '',
@@ -134,7 +137,8 @@ export default function EvaluationPage() {
     )
   }
 
-  const isFormValid = formData.companyName.trim() && formData.policyFile
+  const isFormValid =
+    formData.companyName.trim() && (formData.policyFile || useStoredDocument)
 
   return (
     <div className="flex h-screen bg-white">
@@ -230,8 +234,37 @@ export default function EvaluationPage() {
                   <Label htmlFor="policyFile" className="text-foreground font-semibold text-primary">
                     Policy / Guideline Document *
                   </Label>
+                  
+                  {/* Saved Documents List */}
+                  {documents.length > 0 && (
+                    <div className="mb-4 p-4 bg-blue-50 rounded-lg border border-secondary/20">
+                      <p className="text-sm font-medium text-secondary mb-3">Previously Uploaded Documents</p>
+                      <div className="space-y-2">
+                        {documents.map((doc) => (
+                          <button
+                            key={doc.id}
+                            onClick={() => setUseStoredDocument(doc.id)}
+                            className={`w-full flex items-center justify-between p-3 rounded-lg border-2 transition-all ${
+                              useStoredDocument === doc.id
+                                ? 'bg-secondary/10 border-secondary'
+                                : 'bg-white border-secondary/30 hover:border-secondary'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <FileText className={`w-4 h-4 ${useStoredDocument === doc.id ? 'text-secondary' : 'text-muted-foreground'}`} />
+                              <span className="text-sm font-medium text-foreground">{doc.name}</span>
+                            </div>
+                            {useStoredDocument === doc.id && (
+                              <span className="text-xs font-semibold text-secondary">Selected</span>
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   <p className="text-sm text-muted-foreground mb-3">
-                    Upload the policy or guideline document (PDF, DOC, DOCX)
+                    {useStoredDocument ? 'Or upload a new document' : 'Upload the policy or guideline document (PDF, DOC, DOCX)'}
                   </p>
                   <div className="border-2 border-dashed border-primary/40 rounded-lg p-6 hover:border-primary/70 transition-colors">
                     <input
@@ -240,7 +273,6 @@ export default function EvaluationPage() {
                       accept=".pdf,.doc,.docx"
                       onChange={handleFileChange}
                       className="hidden"
-                      required
                     />
                     <label
                       htmlFor="policyFile"
