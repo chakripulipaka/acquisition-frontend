@@ -149,7 +149,11 @@ export default function Page() {
                   <TableBody>
                     {filteredData.length > 0 ? (
                       filteredData.map((item) => (
-                        <TableRow key={item.id} className="hover:bg-muted/10">
+                        <TableRow 
+                          key={item.id} 
+                          className="hover:bg-muted/10 cursor-pointer transition-colors"
+                          onClick={() => router.push(`/company/${item.id}`)}
+                        >
                           <TableCell className="font-medium text-foreground">
                             {item.company}
                           </TableCell>
