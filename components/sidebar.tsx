@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BarChart3, Settings, Plus } from 'lucide-react'
+import { BarChart3, Settings } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
@@ -10,11 +10,6 @@ const navItems = [
     label: 'Dashboard',
     href: '/',
     icon: BarChart3,
-  },
-  {
-    label: 'New Evaluation',
-    href: '/evaluation',
-    icon: Plus,
   },
   {
     label: 'Settings',
