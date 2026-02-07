@@ -27,11 +27,8 @@ export function Sidebar() {
     <aside className="w-64 border-r border-border bg-sidebar text-sidebar-foreground h-screen flex flex-col">
       {/* Logo/Brand Section */}
       <div className="px-6 py-8 border-b border-sidebar-border">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold text-lg">
-            A
-          </div>
-          <span className="font-bold text-lg text-sidebar-foreground">Acquire</span>
+        <Link href="/" className="flex items-center">
+          <span className="font-sora font-light text-2xl text-sidebar-foreground">acquire</span>
         </Link>
       </div>
 
