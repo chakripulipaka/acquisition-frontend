@@ -57,12 +57,12 @@ export default function EvaluationResult() {
                   </p>
                   <h1 className="text-4xl font-bold text-foreground mb-4">{company}</h1>
 
-                  {/* Risk Rating Badge */}
+                  {/* Satisfaction Rating Badge */}
                   <div className="flex items-center gap-3">
                     <div
                       className={`${riskConfig.color} ${riskConfig.textColor} px-4 py-2 rounded-lg font-bold text-lg`}
                     >
-                      {riskLevel} Risk
+                      {riskLevel} Satisfaction
                     </div>
                     <div
                       className={`${riskConfig.color} ${riskConfig.textColor} px-4 py-2 rounded-lg font-bold text-lg`}

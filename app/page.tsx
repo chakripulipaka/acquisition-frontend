@@ -143,7 +143,7 @@ export default function Page() {
                   <TableHeader className="bg-gray-50">
                     <TableRow className="border-b hover:bg-gray-50">
                       <TableHead className="font-semibold">Company</TableHead>
-                      <TableHead className="font-semibold">Risk Level</TableHead>
+                      <TableHead className="font-semibold">Satisfaction Level</TableHead>
                       <TableHead className="font-semibold">Status</TableHead>
                       <TableHead className="font-semibold">Last Updated</TableHead>
                     </TableRow>
