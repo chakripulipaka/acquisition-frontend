@@ -178,11 +178,7 @@ export default function Page() {
                             </span>
                           </TableCell>
                           <TableCell className="text-muted-foreground text-sm">
-                            {new Date(item.lastUpdated).toLocaleDateString('en-US', {
-                              year: 'numeric',
-                              month: 'short',
-                              day: 'numeric',
-                            })}
+                            {item.lastUpdated}
                           </TableCell>
                         </TableRow>
                       ))
