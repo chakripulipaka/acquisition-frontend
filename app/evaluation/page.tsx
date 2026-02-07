@@ -29,7 +29,7 @@ import {
 import { CheckCircle2, Upload, FileText, Loader2, AlertCircle } from 'lucide-react'
 import { useDocuments } from '@/contexts/documents-context'
 import { useEvaluations } from '@/contexts/evaluations-context'
-import { uploadPolicyAndGenerateRubric, runEvaluation } from '@/lib/api'
+import { generateFakeEvaluation } from '@/lib/mock-data'
 
 const INDUSTRIES = [
   'Technology',
@@ -47,7 +47,7 @@ const INDUSTRIES = [
 export default function EvaluationPage() {
   const router = useRouter()
   const { documents } = useDocuments()
-  const { refreshEvaluations } = useEvaluations()
+  const { addEvaluation } = useEvaluations()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [progressMessage, setProgressMessage] = useState('')
@@ -98,44 +98,42 @@ export default function EvaluationPage() {
     setErrorMessage('')
 
     try {
-      // Step 1: Get the file
-      let file = formData.policyFile
-      if (!file && useStoredDocument) {
-        const stored = documents.find((d) => d.id === useStoredDocument)
-        file = stored?.file ?? null
-      }
-      if (!file) {
+      // Validate a file is selected
+      const hasFile = formData.policyFile || useStoredDocument
+      if (!hasFile) {
         throw new Error('Please select a policy document to upload.')
       }
 
-      // Step 2: Upload document + generate rubric in one call
+      // Step 1: Simulate upload + rubric generation
       setProgressMessage('Uploading document and generating rubric...')
-      const uploadResult = await uploadPolicyAndGenerateRubric(file, formData.companyName + ' Policy')
+      await new Promise((r) => setTimeout(r, 1500))
 
-      // Step 3: Run evaluation (GPT analysis)
+      // Step 2: Simulate evaluation
       setProgressMessage('Running company evaluation...')
-      const evalResult = await runEvaluation({
-        company_name: formData.companyName,
-        company_info: {
-          website: formData.companyWebsite,
-          industry: formData.industry,
-          additionalInfo: formData.additionalInfo,
-        },
-        policy_rubric_id: uploadResult.policyRubric.id,
+      await new Promise((r) => setTimeout(r, 2000))
+
+      // Step 3: Generate fake evaluation data
+      setProgressMessage('Analyzing compliance data and sources...')
+      await new Promise((r) => setTimeout(r, 1000))
+
+      const fakeEval = generateFakeEvaluation(formData.companyName, {
+        website: formData.companyWebsite,
+        industry: formData.industry,
+        additionalInfo: formData.additionalInfo,
       })
 
-      // Step 4: Refresh shared evaluations list
-      await refreshEvaluations()
+      // Step 4: Add to shared evaluations context
+      addEvaluation(fakeEval)
 
       setResultSummary({
-        categories: uploadResult.policyRubric.rubric?.categories?.length ?? 0,
+        categories: fakeEval.evaluation_results?.[0]?.rubric_results?.yourPolicyConcerns?.length ?? 0,
         items: 0,
       })
       setIsSuccess(true)
       setIsSubmitting(false)
 
       setTimeout(() => {
-        router.push(`/company/${evalResult.evaluation_id}`)
+        router.push(`/company/${fakeEval.id}`)
       }, 2000)
     } catch (error) {
       const message = error instanceof Error ? error.message : 'An unexpected error occurred.'

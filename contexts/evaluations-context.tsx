@@ -1,7 +1,7 @@
 'use client'
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
-import { fetchEvaluations } from '@/lib/api'
+import React, { createContext, useContext, useState, useCallback } from 'react'
+import { MOCK_EVALUATIONS } from '@/lib/mock-data'
 
 export interface SupabaseEvaluation {
   id: string
@@ -25,35 +25,31 @@ interface EvaluationsContextType {
   loading: boolean
   refreshEvaluations: () => Promise<void>
   getEvaluation: (id: string) => SupabaseEvaluation | undefined
+  addEvaluation: (evaluation: SupabaseEvaluation) => void
 }
 
 const EvaluationsContext = createContext<EvaluationsContextType | undefined>(undefined)
 
 export function EvaluationsProvider({ children }: { children: React.ReactNode }) {
-  const [evaluations, setEvaluations] = useState<SupabaseEvaluation[]>([])
-  const [loading, setLoading] = useState(true)
+  const [localEvaluations, setLocalEvaluations] = useState<SupabaseEvaluation[]>([])
+  const [loading, setLoading] = useState(false)
+
+  const evaluations = [...localEvaluations, ...MOCK_EVALUATIONS]
 
   const refreshEvaluations = useCallback(async () => {
-    try {
-      setLoading(true)
-      const data = await fetchEvaluations()
-      setEvaluations(data)
-    } catch (error) {
-      console.error('Failed to fetch evaluations:', error)
-    } finally {
-      setLoading(false)
-    }
+    // Mock data is always available — no API call needed
+    setLoading(false)
   }, [])
-
-  useEffect(() => {
-    refreshEvaluations()
-  }, [refreshEvaluations])
 
   const getEvaluation = (id: string) => evaluations.find((e) => e.id === id)
 
+  const addEvaluation = useCallback((evaluation: SupabaseEvaluation) => {
+    setLocalEvaluations((prev) => [evaluation, ...prev])
+  }, [])
+
   return (
     <EvaluationsContext.Provider
-      value={{ evaluations, loading, refreshEvaluations, getEvaluation }}
+      value={{ evaluations, loading, refreshEvaluations, getEvaluation, addEvaluation }}
     >
       {children}
     </EvaluationsContext.Provider>

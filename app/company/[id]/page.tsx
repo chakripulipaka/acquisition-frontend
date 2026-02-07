@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { Sidebar } from '@/components/sidebar'
 import { Card } from '@/components/ui/card'
@@ -15,7 +15,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { SourcePreviewDialog } from '@/components/source-preview-dialog'
 import { ArrowLeft, ExternalLink, LinkIcon, Loader2 } from 'lucide-react'
-import { fetchEvaluationById } from '@/lib/api'
+import { useEvaluations } from '@/contexts/evaluations-context'
 import type { RubricItem, Source, PolicyGrounding } from '@/lib/types'
 
 function getRatingColor(score: number) {
@@ -127,19 +127,12 @@ export default function CompanyDetailPage() {
   const params = useParams()
   const id = params.id as string
 
-  const [evaluation, setEvaluation] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const { getEvaluation } = useEvaluations()
+  const evaluation = getEvaluation(id) ?? null
+  const loading = false
+  const error = evaluation ? '' : 'Evaluation not found'
   const [previewSource, setPreviewSource] = useState<Source | null>(null)
   const [previewPolicyGrounding, setPreviewPolicyGrounding] = useState<PolicyGrounding | null>(null)
-
-  useEffect(() => {
-    if (!id) return
-    fetchEvaluationById(id)
-      .then(setEvaluation)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false))
-  }, [id])
 
   const handlePolicyItemClick = (item: RubricItem) => {
     if (item.policyGrounding) {
